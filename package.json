@@ -25,8 +25,7 @@
     "cms"
   ],
   "dependencies": {
-    "axios": "^0.11.0",
-    "drupal-api": "0.0.2"
+    "axios": "^0.11.0"
   },
   "devDependencies": {
     "babel-core": "^6.8.0",

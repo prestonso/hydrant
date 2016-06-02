@@ -4,27 +4,30 @@ const requireSubvert = require('require-subvert')(__dirname);
 
 module.exports = {
   tearDown: cb => {
-    Object.keys(require.cache).forEach(key => {delete require.cache[key];});
+    requireSubvert.cleanUp();
     cb();
   },
   get: {
     success: test => {
       test.expect(1);
       requireSubvert.subvert('axios', () => (
-        Promise.resolve({data: 'getSuccess'})
+        Promise.resolve({data: 'foo'})
       ));
 
       const Node = requireSubvert.require('../../lib/resources/node');
-      const node = new Node('http://foo.dev', {user: 'b', pass: 'b'});
+      const node = new Node('http://foo.dev', {user: 'a', pass: 'b'});
 
       node.get(1, 'json')
         .then(res => {
-          test.equal('getSuccess', res, 'Unexpected response.');
+          test.equal('foo', res, 'Unexpected response.');
           test.done();
         });
     },
     failure: test => {
       test.expect(2);
+      requireSubvert.subvert('axios', () => (
+        Promise.resolve({data: 'foo'})
+      ));
 
       const Node = requireSubvert.require('../../lib/resources/node');
       const node = new Node('http://foo.dev', {user: 'a', pass: 'b'});
@@ -41,7 +44,7 @@ module.exports = {
     success: test => {
       test.expect(1);
       requireSubvert.subvert('axios', () => (
-        Promise.resolve({data: 'setSuccess'})
+        Promise.resolve({data: 'foo'})
       ));
 
       const Node = requireSubvert.require('../../lib/resources/node');
@@ -49,12 +52,15 @@ module.exports = {
 
       node.set(1, 'json', {foo: 'bar'})
         .then(res => {
-          test.equal('setSuccess', res, 'Unexpected body returned.');
+          test.equal('foo', res, 'Unexpected body returned.');
           test.done();
         });
     },
     failure: test => {
       test.expect(2);
+      requireSubvert.subvert('axios', () => (
+        Promise.resolve({data: 'foo'})
+      ));
 
       const Node = requireSubvert.require('../../lib/resources/node');
       const node = new Node('http://foo.dev', {user: 'a', pass: 'b'});
@@ -69,7 +75,7 @@ module.exports = {
     nonObjectBody: test => {
       test.expect(1);
       requireSubvert.subvert('axios', () => (
-        Promise.resolve({data: 'setNonObjectBody'})
+        Promise.resolve({data: 'foo'})
       ));
 
       const Node = requireSubvert.require('../../lib/resources/node');
@@ -77,7 +83,7 @@ module.exports = {
 
       node.set(1, 'json', '')
         .then(res => {
-          test.equal('setNonObjectBody', res, 'Unexpected body returned.');
+          test.equal('foo', res, 'Unexpected body returned.');
           test.done();
         });
     }
@@ -86,7 +92,7 @@ module.exports = {
     success: test => {
       test.expect(1);
       requireSubvert.subvert('axios', () => (
-        Promise.resolve({data: 'createSuccess'})
+        Promise.resolve({data: 'foo'})
       ));
 
       const Node = requireSubvert.require('../../lib/resources/node');
@@ -94,12 +100,15 @@ module.exports = {
 
       node.create('json', {foo: 'bar'})
         .then(res => {
-          test.equal('createSuccess', res, 'Unexpected body returned.');
+          test.equal('foo', res, 'Unexpected body returned.');
           test.done();
         });
     },
     failure: test => {
       test.expect(2);
+      requireSubvert.subvert('axios', () => (
+        Promise.resolve({data: 'foo'})
+      ));
 
       const Node = requireSubvert.require('../../lib/resources/node');
       const node = new Node('http://foo.dev', {user: 'a', pass: 'b'});
@@ -116,7 +125,7 @@ module.exports = {
     success: test => {
       test.expect(1);
       requireSubvert.subvert('axios', () => (
-        Promise.resolve({data: 'deleteSuccess'})
+        Promise.resolve({data: 'foo'})
       ));
 
       const Node = requireSubvert.require('../../lib/resources/node');
@@ -124,13 +133,15 @@ module.exports = {
 
       node.delete(1)
         .then(res => {
-          test.equal('deleteSuccess', res, 'Unexpected body returned.');
+          test.equal('foo', res, 'Unexpected body returned.');
           test.done();
         });
     },
     failure: test => {
       test.expect(2);
-
+      requireSubvert.subvert('axios', () => (
+        Promise.resolve({data: 'foo'})
+      ));
       const Node = requireSubvert.require('../../lib/resources/node');
       const node = new Node('http://foo.dev', {user: 'a', pass: 'b'});
 
