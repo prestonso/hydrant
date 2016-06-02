@@ -14,10 +14,10 @@ module.exports = {
         Promise.resolve({data: 'getSuccess'})
       ));
 
-      const ContentType = requireSubvert.require('../../lib/resources/contentType');
-      const contentType = new ContentType('http://foo.dev', {user: 'a', pass: 'b'});
+      const Comment = requireSubvert.require('../../lib/resources/comment');
+      const comment = new Comment('http://foo.dev', {user: 'b', pass: 'b'});
 
-      contentType.get('mycontenttype', 'json')
+      comment.get(1, 'json')
         .then(res => {
           test.equal('getSuccess', res, 'Unexpected response.');
           test.done();
@@ -26,13 +26,13 @@ module.exports = {
     failure: test => {
       test.expect(2);
 
-      const ContentType = requireSubvert.require('../../lib/resources/contentType');
-      const contentType = new ContentType('http://foo.dev', {user: 'a', pass: 'b'});
+      const Comment = requireSubvert.require('../../lib/resources/comment');
+      const comment = new Comment('http://foo.dev', {user: 'a', pass: 'b'});
 
-      contentType.get(false, 'json')
+      comment.get(false, 'json')
         .catch(err => {
           test.equal(true, err instanceof Error);
-          test.equal(err.message, 'Expected parameter contentType must be a string', 'Unexpected error message.');
+          test.equal(err.message, 'Expected parameter commentId must be a number', 'Unexpected error message.');
           test.done();
         });
     }
@@ -44,10 +44,10 @@ module.exports = {
         Promise.resolve({data: 'setSuccess'})
       ));
 
-      const ContentType = requireSubvert.require('../../lib/resources/contentType');
-      const contentType = new ContentType('http://foo.dev', {user: 'a', pass: 'b'});
+      const Comment = requireSubvert.require('../../lib/resources/comment');
+      const comment = new Comment('http://foo.dev', {user: 'a', pass: 'b'});
 
-      contentType.set('mycontenttype', 'json', {foo: 'bar'})
+      comment.set(1, 'json', {foo: 'bar'})
         .then(res => {
           test.equal('setSuccess', res, 'Unexpected body returned.');
           test.done();
@@ -56,13 +56,13 @@ module.exports = {
     failure: test => {
       test.expect(2);
 
-      const ContentType = requireSubvert.require('../../lib/resources/contentType');
-      const contentType = new ContentType('http://foo.dev', {user: 'a', pass: 'b'});
+      const Comment = requireSubvert.require('../../lib/resources/comment');
+      const comment = new Comment('http://foo.dev', {user: 'a', pass: 'b'});
 
-      contentType.set(false, 'json', {foo: 'bar'})
+      comment.set(false, 'json', {foo: 'bar'})
         .catch(err => {
           test.equal(true, err instanceof Error);
-          test.equal('Expected parameter entityId must be a number', err.message, 'Unexpected error returned.');
+          test.equal('Expected parameter commentId must be a number', err.message, 'Unexpected error returned.');
           test.done();
         });
     },
@@ -72,10 +72,10 @@ module.exports = {
         Promise.resolve({data: 'setNonObjectBody'})
       ));
 
-      const ContentType = requireSubvert.require('../../lib/resources/contentType');
-      const contentType = new ContentType('http://foo.dev', {user: 'a', pass: 'b'});
+      const Comment = requireSubvert.require('../../lib/resources/comment');
+      const comment = new Comment('http://foo.dev', {user: 'a', pass: 'b'});
 
-      contentType.set('mycontenttype', 'json', '')
+      comment.set(1, 'json', '')
         .then(res => {
           test.equal('setNonObjectBody', res, 'Unexpected body returned.');
           test.done();
@@ -89,10 +89,10 @@ module.exports = {
         Promise.resolve({data: 'createSuccess'})
       ));
 
-      const ContentType = requireSubvert.require('../../lib/resources/contentType');
-      const contentType = new ContentType('http://foo.dev', {user: 'a', pass: 'b'});
+      const Comment = requireSubvert.require('../../lib/resources/comment');
+      const comment = new Comment('http://foo.dev', {user: 'a', pass: 'b'});
 
-      contentType.create('json', {foo: 'bar'})
+      comment.create('json', {foo: 'bar'})
         .then(res => {
           test.equal('createSuccess', res, 'Unexpected body returned.');
           test.done();
@@ -101,10 +101,10 @@ module.exports = {
     failure: test => {
       test.expect(2);
 
-      const ContentType = requireSubvert.require('../../lib/resources/contentType');
-      const contentType = new ContentType('http://foo.dev', {user: 'a', pass: 'b'});
+      const Comment = requireSubvert.require('../../lib/resources/comment');
+      const comment = new Comment('http://foo.dev', {user: 'a', pass: 'b'});
 
-      contentType.create('json', false)
+      comment.create('json', false)
         .catch(err => {
           test.equal(true, err instanceof Error);
           test.equal('Expected parameter body must be an Object', err.message, 'Unexpected error returned.');
@@ -119,10 +119,10 @@ module.exports = {
         Promise.resolve({data: 'deleteSuccess'})
       ));
 
-      const ContentType = requireSubvert.require('../../lib/resources/contentType');
-      const contentType = new ContentType('http://foo.dev', {user: 'a', pass: 'b'});
+      const Comment = requireSubvert.require('../../lib/resources/comment');
+      const comment = new Comment('http://foo.dev', {user: 'a', pass: 'b'});
 
-      contentType.delete('mycontenttype')
+      comment.delete(1)
         .then(res => {
           test.equal('deleteSuccess', res, 'Unexpected body returned.');
           test.done();
@@ -130,13 +130,14 @@ module.exports = {
     },
     failure: test => {
       test.expect(2);
-      const ContentType = requireSubvert.require('../../lib/resources/contentType');
-      const contentType = new ContentType('http://foo.dev', {user: 'a', pass: 'b'});
 
-      contentType.delete(false)
+      const Comment = requireSubvert.require('../../lib/resources/comment');
+      const comment = new Comment('http://foo.dev', {user: 'a', pass: 'b'});
+
+      comment.delete(false)
         .catch(err => {
           test.equal(true, err instanceof Error);
-          test.equal('Expected parameter contentType must be a string', err.message, 'Unexpected error returned.');
+          test.equal('Expected parameter commentId must be a number', err.message, 'Unexpected error returned.');
           test.done();
         });
     }
